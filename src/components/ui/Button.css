@@ -1,0 +1,46 @@
+.btn {
+  display: inline-flex;
+  align-items: center;
+  justify-content: center;
+  gap: 0.5em;
+  font-family: var(--font-heading);
+  font-weight: 600;
+  border-radius: var(--radius-sm);
+  border: 1.5px solid transparent;
+  cursor: pointer;
+  transition: background-color 160ms ease, border-color 160ms ease, color 160ms ease, transform 120ms var(--ease-out), box-shadow 160ms ease;
+  white-space: nowrap;
+}
+.btn:active { transform: scale(0.97); }
+.btn:disabled { opacity: 0.5; cursor: not-allowed; transform: none; }
+
+.btn--md { padding: 0.75rem 1.5rem; font-size: 0.95rem; }
+.btn--sm { padding: 0.5rem 1rem; font-size: 0.85rem; }
+.btn--lg { padding: 0.95rem 2rem; font-size: 1.02rem; }
+
+.btn--primary {
+  background: var(--color-secondary);
+  color: var(--color-primary-dark);
+  border-color: var(--color-secondary);
+}
+.btn--primary:hover { filter: brightness(1.06); box-shadow: var(--shadow-sm); }
+
+.btn--secondary {
+  background: transparent;
+  color: currentColor;
+  border-color: currentColor;
+}
+.btn--secondary:hover { background: color-mix(in srgb, currentColor 10%, transparent); }
+
+.btn--ghost {
+  background: transparent;
+  color: var(--color-primary);
+  border-color: transparent;
+  padding-inline: 0.25rem;
+}
+.btn--ghost:hover { color: var(--color-secondary); }
+
+@media (prefers-reduced-motion: reduce) {
+  .btn { transition: background-color 160ms ease, border-color 160ms ease, color 160ms ease; }
+  .btn:active { transform: none; }
+}

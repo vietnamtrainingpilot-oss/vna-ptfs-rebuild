@@ -1,0 +1,37 @@
+html { scroll-behavior: smooth; }
+@media (prefers-reduced-motion: reduce) {
+  html { scroll-behavior: auto; }
+}
+
+.site-shell { min-height: 100vh; display: flex; flex-direction: column; }
+.site-shell > main { flex: 1; }
+
+/* Page transition — remounts (via the `key`) on every route change, so
+   this keyframe replays each navigation without needing a JS library. */
+@keyframes pageEnter {
+  from { opacity: 0; transform: translateY(12px); }
+  to { opacity: 1; transform: translateY(0); }
+}
+.page-enter { animation: pageEnter 420ms var(--ease-out) both; }
+@media (prefers-reduced-motion: reduce) {
+  .page-enter { animation: none; }
+}
+
+.page-title-bar {
+  padding-block: var(--space-6) var(--space-2);
+}
+.page-title-bar h1 { color: var(--color-primary); }
+
+.hub-index__card {
+  padding: var(--space-6);
+  display: flex; align-items: center; justify-content: space-between;
+  font-family: var(--font-heading); font-weight: 600; font-size: 1.05rem;
+  color: var(--color-text);
+}
+.hub-index__card svg { color: var(--color-text-muted); transition: transform 200ms var(--ease-out), color 160ms ease; }
+@media (hover: hover) and (pointer: fine) {
+  .hub-index__card:hover svg { transform: translateX(3px); color: var(--color-primary); }
+}
+@media (prefers-reduced-motion: reduce) {
+  .hub-index__card svg { transition: none; }
+}

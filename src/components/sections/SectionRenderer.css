@@ -1,0 +1,233 @@
+.sr-heading { margin-bottom: var(--space-6); }
+.sr-heading.align-center { text-align: center; }
+.sr-heading.align-right { text-align: right; }
+
+/* Scroll-triggered entrance — wraps every section except Hero (see
+   SectionRenderer.jsx). Fires once, respects prefers-reduced-motion via
+   the useInView hook (which reports "already in view" immediately). */
+.sr-reveal {
+  opacity: 0;
+  transform: translateY(28px);
+  transition: opacity 640ms var(--ease-out), transform 640ms var(--ease-out);
+  will-change: transform, opacity;
+}
+.sr-reveal.is-in { opacity: 1; transform: translateY(0); }
+@media (prefers-reduced-motion: reduce) {
+  .sr-reveal { opacity: 1; transform: none; transition: none; }
+}
+
+/* Hero */
+.sr-hero {
+  position: relative;
+  display: flex;
+  align-items: center;
+  background: linear-gradient(135deg, var(--color-primary) 0%, var(--color-primary-dark) 100%);
+  color: var(--color-white);
+  overflow: hidden;
+}
+.sr-hero--small { min-height: 320px; }
+.sr-hero--medium { min-height: 460px; }
+.sr-hero--large { min-height: min(82vh, 700px); }
+
+/* Background image sits on its own layer with a slow, barely-perceptible
+   zoom — the "signature moment" borrowed from full-bleed premium-carrier
+   heroes rather than a static flat image. */
+.sr-hero__media {
+  position: absolute; inset: 0;
+  background-size: cover;
+  background-position: center;
+  animation: heroKenBurns 20s var(--ease-in-out) both;
+}
+@keyframes heroKenBurns {
+  from { transform: scale(1.08); }
+  to { transform: scale(1); }
+}
+
+/* Directional gradient — darkest behind the text, easing away toward the
+   opposite edge, rather than a flat top-to-bottom wash. */
+.sr-hero__overlay {
+  position: absolute; inset: 0;
+  background: linear-gradient(180deg, rgba(0,0,0,0.05) 0%, rgba(0,0,0,0.42) 100%);
+}
+.sr-hero__overlay--left { background: linear-gradient(100deg, rgba(0,20,26,0.78) 8%, rgba(0,20,26,0.42) 42%, rgba(0,20,26,0.12) 78%); }
+.sr-hero__overlay--right { background: linear-gradient(260deg, rgba(0,20,26,0.78) 8%, rgba(0,20,26,0.42) 42%, rgba(0,20,26,0.12) 78%); }
+.sr-hero__overlay--center { background: radial-gradient(ellipse at center, rgba(0,20,26,0.2) 0%, rgba(0,20,26,0.62) 100%); }
+
+/* Soft fade at the bottom edge so the hero settles into the next section
+   instead of cutting off with a hard line. */
+.sr-hero__fade {
+  position: absolute; left: 0; right: 0; bottom: 0; height: 18%;
+  background: linear-gradient(180deg, transparent 0%, rgba(0,0,0,0.22) 100%);
+  pointer-events: none;
+}
+
+.sr-hero__inner { position: relative; z-index: 1; padding-block: var(--space-7); max-width: 760px; }
+.sr-hero.align-center .sr-hero__inner { margin-inline: auto; text-align: center; }
+.sr-hero.align-right .sr-hero__inner { margin-left: auto; text-align: right; }
+.sr-hero__heading {
+  color: var(--color-white);
+  margin-top: var(--space-2);
+  font-size: clamp(2.4rem, 1.7rem + 3vw, 4.2rem);
+  letter-spacing: -0.015em;
+  text-shadow: 0 2px 24px rgba(0,0,0,0.18);
+}
+.sr-hero--small .sr-hero__heading, .sr-hero--medium .sr-hero__heading { font-size: clamp(2rem, 1.6rem + 1.8vw, 3rem); }
+.sr-hero .eyebrow { color: var(--color-secondary); }
+.sr-hero__subheading { margin-top: var(--space-4); font-size: 1.15rem; line-height: 1.55; color: rgba(255,255,255,0.9); max-width: 560px; }
+.sr-hero.align-center .sr-hero__subheading { margin-inline: auto; }
+.sr-hero__buttons { margin-top: var(--space-6); }
+.sr-hero__buttons.align-center { justify-content: center; }
+.sr-hero__buttons.align-right { justify-content: flex-end; }
+
+/* On-load stagger — hero is above the fold on first paint, so it animates
+   in immediately rather than waiting for a scroll trigger. */
+@keyframes heroFadeUp {
+  from { opacity: 0; transform: translateY(20px); }
+  to { opacity: 1; transform: translateY(0); }
+}
+.sr-hero .eyebrow,
+.sr-hero__heading,
+.sr-hero__subheading,
+.sr-hero__buttons {
+  animation: heroFadeUp 640ms var(--ease-out) both;
+}
+.sr-hero .eyebrow { animation-delay: 40ms; }
+.sr-hero__heading { animation-delay: 120ms; }
+.sr-hero__subheading { animation-delay: 200ms; }
+.sr-hero__buttons { animation-delay: 280ms; }
+@media (prefers-reduced-motion: reduce) {
+  .sr-hero .eyebrow, .sr-hero__heading, .sr-hero__subheading, .sr-hero__buttons { animation: none; }
+  .sr-hero__media { animation: none; }
+}
+
+/* Rich text */
+.sr-richtext--narrow { max-width: 680px; }
+.sr-richtext--narrow.align-center { margin-inline: auto; }
+.sr-richtext.align-center .md-content p,
+.sr-richtext.align-right .md-content p { max-width: none; }
+
+/* Image + text */
+.sr-imagetext { display: grid; grid-template-columns: 1fr 1fr; gap: var(--space-7); align-items: center; }
+.sr-imagetext--right { direction: rtl; }
+.sr-imagetext--right > * { direction: ltr; }
+.sr-imagetext__media { border-radius: var(--radius-lg); overflow: hidden; aspect-ratio: 4/3; }
+@media (max-width: 780px) {
+  .sr-imagetext { grid-template-columns: 1fr; }
+  .sr-imagetext--right { direction: ltr; }
+}
+
+/* Gallery */
+.sr-gallery__item figcaption { margin-top: var(--space-2); font-size: 0.85rem; color: var(--color-text-muted); }
+.sr-gallery__item .img-fallback { border-radius: var(--radius-md); }
+
+/* Feature cards */
+.sr-feature-grid { align-items: start; }
+.sr-feature-card { padding: var(--space-5); }
+.sr-feature-card--list { display: flex; flex-direction: row; gap: var(--space-4); align-items: flex-start; }
+.sr-feature-card__icon {
+  width: 46px; height: 46px; border-radius: var(--radius-sm);
+  display: flex; align-items: center; justify-content: center;
+  background: var(--color-surface); color: var(--color-primary);
+  margin-bottom: var(--space-4); flex-shrink: 0;
+  transition: background-color 220ms var(--ease-out), color 220ms var(--ease-out);
+}
+.sr-feature-card--list .sr-feature-card__icon { margin-bottom: 0; }
+.sr-feature-card__image { border-radius: var(--radius-sm); overflow: hidden; margin-bottom: var(--space-4); aspect-ratio: 16/9; }
+.sr-feature-card__body h3 { margin-bottom: var(--space-2); }
+.sr-feature-card__body p { color: var(--color-text-muted); font-size: 0.95rem; }
+
+/* Featured card — gives the flagship item (the mainline aircraft, the top
+   rank, the lead role) visual weight instead of every card competing at
+   equal size. Spans two grid tracks and gets a filled accent icon chip. */
+.sr-feature-card--featured {
+  grid-column: span 2;
+  padding: var(--space-6);
+  background: linear-gradient(155deg, var(--color-creme) 0%, var(--color-white) 55%);
+  border-color: color-mix(in srgb, var(--color-secondary) 40%, var(--color-border));
+}
+.sr-feature-card--featured .sr-feature-card__icon {
+  width: 56px; height: 56px;
+  background: var(--color-secondary); color: var(--color-primary-dark);
+}
+.sr-feature-card--featured .sr-feature-card__image { aspect-ratio: 21/9; }
+.sr-feature-card--featured h3 { font-size: 1.3rem; }
+.sr-feature-card--featured .sr-feature-card__body p { font-size: 1rem; }
+@media (max-width: 900px) {
+  .sr-feature-card--featured { grid-column: span 2; }
+}
+@media (max-width: 600px) {
+  .sr-feature-card--featured { grid-column: span 1; }
+}
+
+/* Button row handled by utility classes */
+
+/* CTA banner */
+.sr-cta { padding-block: var(--space-7); }
+.sr-cta--brand { background: var(--color-primary); color: var(--color-white); }
+.sr-cta--gold { background: var(--color-secondary); color: var(--color-primary-dark); }
+.sr-cta--subtle { background: var(--color-surface); color: var(--color-text); }
+.sr-cta__inner { display: flex; align-items: center; justify-content: space-between; gap: var(--space-5); flex-wrap: wrap; }
+.sr-cta__inner h2 { color: inherit; }
+.sr-cta__inner p { margin-top: var(--space-2); color: inherit; opacity: 0.86; max-width: 520px; }
+.sr-cta__inner .md-content a { color: inherit; text-decoration-color: currentColor; opacity: 1; }
+
+/* Stats */
+.sr-stats__item { text-align: center; padding: var(--space-5); }
+.sr-stats__value { font-family: var(--font-heading); font-weight: 700; font-size: clamp(1.8rem, 1.5rem + 1vw, 2.6rem); color: var(--color-primary); }
+.sr-stats__label { margin-top: var(--space-2); color: var(--color-text-muted); font-size: 0.9rem; }
+@media (max-width: 700px) { .sr-stats { grid-template-columns: repeat(2, 1fr) !important; gap: var(--space-4) !important; } }
+
+/* Accordion */
+.sr-accordion__item { border-bottom: 1px solid var(--color-border); }
+.sr-accordion__trigger {
+  width: 100%; display: flex; align-items: center; justify-content: space-between;
+  padding: var(--space-4) var(--space-2); background: none; border: none; text-align: left;
+  font-family: var(--font-heading); font-weight: 600; font-size: 1rem; color: var(--color-text); cursor: pointer;
+  transition: color 160ms ease;
+}
+.sr-accordion__trigger:hover { color: var(--color-primary); }
+.sr-accordion__icon { transition: transform 220ms var(--ease-out), color 160ms ease; }
+.sr-accordion__item.is-open .sr-accordion__icon { transform: rotate(45deg); color: var(--color-secondary); }
+/* Height animates via a 0fr/1fr grid track — smoother and cheaper than
+   measuring scrollHeight in JS, and works for arbitrary content length. */
+.sr-accordion__panel-wrap {
+  display: grid;
+  grid-template-rows: 0fr;
+  transition: grid-template-rows 280ms var(--ease-out);
+}
+.sr-accordion__item.is-open .sr-accordion__panel-wrap { grid-template-rows: 1fr; }
+.sr-accordion__panel-inner { overflow: hidden; min-height: 0; }
+.sr-accordion__panel { padding: 0 var(--space-2) var(--space-4); color: var(--color-text-muted); }
+@media (prefers-reduced-motion: reduce) {
+  .sr-accordion__panel-wrap { transition: none; }
+  .sr-accordion__icon { transition: none; }
+}
+
+/* Table */
+.sr-table-wrap { overflow-x: auto; border: 1px solid var(--color-border); border-radius: var(--radius-md); }
+.sr-table { width: 100%; border-collapse: collapse; font-size: 0.92rem; }
+.sr-table th, .sr-table td { padding: var(--space-3) var(--space-4); text-align: left; border-bottom: 1px solid var(--color-border); white-space: nowrap; }
+.sr-table th { font-family: var(--font-heading); font-weight: 600; background: var(--color-surface); color: var(--color-text); }
+.sr-table tr:last-child td { border-bottom: none; }
+
+/* Video */
+.sr-video { position: relative; width: 100%; aspect-ratio: 16/9; border-radius: var(--radius-md); overflow: hidden; background: var(--color-surface); }
+.sr-video iframe { position: absolute; inset: 0; width: 100%; height: 100%; border: none; }
+.sr-video__placeholder { width: 100%; height: 100%; display: flex; align-items: center; justify-content: center; color: var(--color-text-muted); }
+.sr-video__caption { margin-top: var(--space-3); font-size: 0.85rem; color: var(--color-text-muted); }
+
+/* Social links */
+.sr-social-link {
+  display: inline-flex; align-items: center; gap: var(--space-2);
+  padding: 0.65rem 1.1rem; border: 1.5px solid var(--color-border); border-radius: 999px;
+  font-weight: 600; font-size: 0.9rem; color: var(--color-text);
+  transition: border-color 140ms ease, color 140ms ease;
+}
+.sr-social-link:hover { border-color: var(--color-primary); color: var(--color-primary); }
+
+/* Divider */
+.sr-divider--small { height: var(--space-4); }
+.sr-divider--medium { height: var(--space-7); }
+.sr-divider--large { height: var(--space-9); }
+.sr-divider--line { display: flex; align-items: center; }
+.sr-divider--line::after { content: ''; display: block; width: 100%; height: 1px; background: var(--color-border); margin-inline: var(--space-5); }

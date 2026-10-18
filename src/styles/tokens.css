@@ -1,0 +1,53 @@
+:root {
+  /* Brand colors — overridden at runtime by ThemeInjector from siteConfig.theme.colors */
+  --color-primary: #005F6E;
+  --color-primary-dark: #003C46;
+  --color-secondary: #E6B441;
+  --color-creme: #FAFAEB;
+  --color-background: #FFFFFF;
+  --color-surface: #F4F6F7;
+  --color-text: #13222B;
+  --color-text-muted: #5B6B74;
+  --color-border: #E1E7EA;
+
+  /* Derived / fixed */
+  --color-white: #FFFFFF;
+  --color-danger: #C1462F;
+  --color-success: #2F7A4F;
+
+  /* Typography — overridden at runtime by ThemeInjector from the active font preset */
+  --font-heading: 'Titillium Web', 'Segoe UI', sans-serif;
+  --font-body: 'Open Sans', 'Segoe UI', sans-serif;
+
+  /* Radius — overridden at runtime based on theme.radius */
+  --radius-sm: 6px;
+  --radius-md: 10px;
+  --radius-lg: 16px;
+
+  /* Spacing scale */
+  --space-1: 0.25rem;
+  --space-2: 0.5rem;
+  --space-3: 0.75rem;
+  --space-4: 1rem;
+  --space-5: 1.5rem;
+  --space-6: 2rem;
+  --space-7: 3rem;
+  --space-8: 4rem;
+  --space-9: 6rem;
+
+  /* Shadows */
+  --shadow-sm: 0 1px 2px rgba(19, 34, 43, 0.06), 0 1px 1px rgba(19, 34, 43, 0.04);
+  --shadow-md: 0 6px 16px rgba(19, 34, 43, 0.10), 0 2px 6px rgba(19, 34, 43, 0.06);
+  --shadow-lg: 0 20px 44px rgba(19, 34, 43, 0.16), 0 6px 14px rgba(19, 34, 43, 0.08);
+
+  /* Layout */
+  --container-width: 1200px;
+  --header-height: 76px;
+
+  /* Easing — see Emil Kowalski's animation blueprint: ease-out for things
+     entering/exiting, ease-in-out for on-screen movement, ease for hovers */
+  --ease-out: cubic-bezier(0.165, 0.84, 0.44, 1);   /* ease-out-quart */
+  --ease-in-out: cubic-bezier(0.645, 0.045, 0.355, 1); /* ease-in-out-cubic */
+
+  color-scheme: light;
+}
